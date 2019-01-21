@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--这个地方必须是对应的接口的权限定名称-->
+<mapper namespace="com.qianfengsix.hotel.mapper.UserMapper">
+    <!--
+        id必须和接口中对应方法的名字一样
+        parameterType 必须和方法的参数一致
+        resultType必须和方法的返回值一致
+    -->
+    <insert id="addUser">
+        insert into hotelsix.qf_user(user_name, user_mobile, user_nickname, user_identify, user_salt, user_img, user_password) values (#{user_name}, #{user_mobile}, #{user_nickname}, #{user_identify}, #{user_salt}, #{user_img}, #{user_password})
+    </insert>
+    <update id="addUser_identify" parameterType="string">
+        update qf_user set user_identify=#{user_identify} where user_mobile=#{user_mobile}
+    </update>
+    <select id="findUserByUserMobile" parameterType="string" resultType="com.qianfengsix.hotel.user.pojo.User">
+        select user_name, user_mobile, user_nickname, user_identify, user_img from hotelsix.qf_user where user_mobile=#{user_mobile}
+    </select>
+
+    <!--实现头像在服务器地址到数据库的存储-->
+    <update id="updateUser_img" >
+        update qf_user set user_img=#{user_img} where user_mobile=#{user_mobile}
+    </update>
+    <update id="updateUser_nickname" parameterType="string">
+        update qf_user set user_nickname=#{user_nickname} where user_mobile=#{user_mobile}
+    </update>
+    <update id="updateUser_mobile" parameterType="int">
+        update qf_user set user_mobile=#{user_mobile} where user_id=#{user_id}
+    </update>
+</mapper>

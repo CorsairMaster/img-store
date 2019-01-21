@@ -1,0 +1,28 @@
+spring:
+  datasource:
+<<<<<<< HEAD
+    url: jdbc:mysql://10.9.16.158:3306/hotelsix?useUnicode=true&characterEncoding=utf-8&useSSL=false
+=======
+    url: jdbc:mysql://10.9.16.158:3306/hotelsix?useUnicode=true&characterEncoding=utf8
+>>>>>>> fa626321defdcc45e2b1e07942beb4a285b3413a
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: qishimeiyoumima
+    type: com.alibaba.druid.pool.DruidDataSource #连接池的类型
+  mvc:
+    view:
+      suffix: .html
+  redis:
+    port: 6379
+    host: 10.9.16.160
+    password: redis001
+    jedis:
+      pool:
+        min-idle: 10
+        max-active: 1024
+        max-idle: 100
+pagehelper:
+  helper-dialect: mysql #不同的数据库分页语句可能不一样,
+  params: count=countsql
+  reasonable: true
+  support-methods-arguments: true

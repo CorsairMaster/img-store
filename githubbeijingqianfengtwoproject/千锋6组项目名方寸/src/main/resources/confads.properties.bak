@@ -1,0 +1,7 @@
+<<<<<<< HEAD
+#配置向导服务器  用来存储文件
+=======
+#\u914D\u7F6E\u5411\u5BFC\u670D\u52A1\u5668  \u7528\u6765\u5B58\u50A8\u6587\u4EF6
+>>>>>>> fa626321defdcc45e2b1e07942beb4a285b3413a
+tracker_server=10.9.16.161:22122
+#http://10.9.251.200:8082/group1/M00/00/05/Cgn7yFvcCuaACy2EAAJKmZHQT60867.jpg

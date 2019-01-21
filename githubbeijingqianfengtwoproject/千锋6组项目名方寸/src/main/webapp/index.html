@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        var websocket = null;
+        function connect() {
+            var username = document.getElementById("name").value;
+            if ('WebSocket' in window) {
+                websocket = new WebSocket("ws://" + document.location.host + "/websocket/" + username);
+
+            } else {
+                alert("不支持WebSocket");
+            }
+            websocket.onopen=function () {
+                alert("连接成功");
+            };
+            websocket.onmessage=function (event) {
+                alert(event.data)
+            };
+            websocket.onclose=function () {
+                location.href=document.location.host+"/error.html";
+            };
+            websocket.onerror=function () {
+                location.href=document.location.host+"/error.html";
+            };
+            window.onbeforeunload = function () {
+                if(websocket!=null){
+                    websocket.close();
+                }
+            }
+        }
+        function sendMsg() {
+            var toUser = document.getElementById("toUser").value;
+            var toMessage = document.getElementById("toMessage").value;
+            if (websocket!=null){
+                var msg='{"toUser":"'+toUser+'","toMessage":"'+toMessage+'"}';
+                alert(msg);
+                websocket.send(msg);
+            }
+        }
+    </script>
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="name">
+<button onclick="connect()">connect</button>
+接收者:<input type="text" id="toUser"><br>
+内容:<input type="text" id="toMessage"><br>
+<input type="button" value="send" onclick="sendMsg()">
+</body>
+</html>

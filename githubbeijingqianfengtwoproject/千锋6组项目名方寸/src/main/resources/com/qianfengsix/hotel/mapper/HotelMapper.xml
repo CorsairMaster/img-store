@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--这个地方必须是对应的接口的权限定名称-->
+<mapper namespace="com.qianfengsix.hotel.mapper.HotelMapper">
+    <!--
+        id必须和接口中对应方法的名字一样
+        parameterType 必须和方法的参数一致
+        resultType必须和方法的返回值一致
+    -->
+    <insert id="addHotel">
+        insert into hotelsix.qf_hotel(hotel_name, hotel_msg, hotel_img, hotel_type, hotel_local, hotel_tag, hotel_price, hotel_available_num) VALUES (#{hotel_name}, #{hotel_msg}, #{hotel_img}, #{hotel_type}, #{hotel_local}, #{hotel_tag}, #{hotel_price}, #{hotel_available_num})
+    </insert>
+    <sql id="getAll">
+         select * from qf_hotel
+    </sql>
+    <select id="findHotel"  parameterType="com.qianfengsix.hotel.hotel.pojo.Hotel" resultType="com.qianfengsix.hotel.hotel.pojo.Hotel">
+        <include refid="getAll"/>
+        <where>
+        <if test="hotel_id !=null">
+            and hotel_id=#{hotel_id}
+        </if>
+        <if test="hotel_name !=null">
+            and hotel_name like '%${hotel_name}%'
+        </if>
+            <if test="hotel_msg !=null">
+                and  hotel_msg like '%${hotel_msg}%'
+            </if>
+            <if test="hotel_img !=null">
+                and  hotel_img like '%${hotel_img}%'
+            </if>
+            <if test="hotel_type !=null">
+                and  hotel_type like '%${hotel_type}%'
+            </if>
+            <if test="hotel_local !=null">
+                and hotel_local like '%${hotel_local}%'
+            </if>
+            <if test="hotel_tag !=null">
+                and hotel_tag like '%${hotel_tag}%'
+            </if>
+            <if test="hotel_price !=null">
+                and hotel_price like '%${hotel_price}%'
+            </if>
+            <if test="hotel_available_num !=null">
+                and hotel_available_num like '%${hotel_available_num}%'
+            </if>
+            <if test="hotel_city !=null">
+                and hotel_city like '%${hotel_city}%'
+            </if>
+
+
+        </where>
+    </select>
+    
+    <select id="findHotelByType" parameterType="String" resultMap="hotelAndHotelTypeMap">
+        select * from qf_hotel,qf_hotel_type where qf_hotel.hotel_type=qf_hotel_type.htype_id and hotel_type=#{hotel_type}
+    </select>
+    
+    <resultMap id="hotelAndHotelTypeMap" type="com.qianfengsix.hotel.hotel.pojo.HotelType">
+        <id property="htype_id" column="htype_id" />
+        <result property="htype_name" column="htype_name" />
+         <collection property="hotel" ofType="com.qianfengsix.hotel.hotel.pojo.Hotel">
+             <id property="hotel_id" column="hotel_id"/>
+             <result property="hotel_name" column="hotel_name"/>
+             <result property="hotel_msg" column="hotel_msg"/>
+             <result property="hotel_price" column="hotel_price"/>
+             <result property="hotel_tag" column="hotel_tag"/>
+             <result property="hotel_local" column="hotel_local"/>
+             <result property="hotel_img" column="hotel_img"/>
+             <result property="hotel_available_num" column="hotel_available_num"/>
+             <result property="hotel_city" column="hotel_city"/>
+         </collection>
+    </resultMap>
+
+    <select id="getAllHotel" resultType="com.qianfengsix.hotel.hotel.pojo.Hotel">
+        select hotel_name,hotel_msg ,hotel_price,hotel_tag,hotel_local,hotel_img ,hotel_available_num from qf_hotel
+    </select>
+</mapper>
